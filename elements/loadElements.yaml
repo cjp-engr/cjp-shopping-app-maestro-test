@@ -1,0 +1,5 @@
+# elements/loadElements.yaml
+appId: ${APP_ID}
+---
+
+- runScript: login.js

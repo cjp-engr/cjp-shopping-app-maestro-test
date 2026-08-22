@@ -1,0 +1,15 @@
+appId: ${APP_ID}
+---
+
+- runFlow: ../elements/loadElements.yaml
+- launchApp:
+    clearState: true
+
+- tapOn:
+    id: ${output.login.loginEmailField}
+- inputText: ${EMAIL}
+- tapOn:
+    id: ${output.login.loginPasswordField}
+- inputText: ${PASSWORD}
+- tapOn: "login_button"
+- assertVisible: "New Arrivals"
