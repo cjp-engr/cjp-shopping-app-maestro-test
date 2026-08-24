@@ -3,3 +3,9 @@ appId: ${APP_ID}
 ---
 
 - runScript: login.js
+- runScript:
+    file: apiClients.js
+    env:
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+      API_URL: ${API_URL}
