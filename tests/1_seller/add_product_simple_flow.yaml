@@ -1,6 +1,4 @@
 appId: ${APP_ID}
 ---
 
-- runFlow: ../../elements/loadElements.yaml
-- launchApp:
-    clearState: true
+- runFlow: ../0_auth/login-flow.yaml
