@@ -3,6 +3,9 @@ appId: ${APP_ID}
 ---
 
 - runScript: login.js
+- runScript: navBar.js
+- runScript: sellerDashboard.js
+- runScript: addEditProductListing.js
 - runScript:
     file: apiClients.js
     env:

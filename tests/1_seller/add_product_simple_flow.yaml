@@ -1,4 +1,89 @@
 appId: ${APP_ID}
 ---
 
-- runFlow: ../0_auth/login-flow.yaml
+- runFlow: ../0_auth/login_flow.yaml
+
+- tapOn:
+    id: ${output.navBar.sellerNavTab}
+- tapOn:
+    id: ${output.sellerDashboard.addProductFab}
+
+- tapOn:
+    text: "Product Name"
+- inputText: "Sample Product Only"
+
+- tapOn:
+    text: "Select a category"
+- tapOn:
+    text: "Electronics"
+
+- tapOn:
+    text: "Brand (Optional)"
+- inputText: "Brand Test"
+
+- tapOn:
+    text: "Next"
+
+- tapOn:
+    text: "Price ($)"
+- inputText: "99.99"
+
+- tapOn:
+    text: "Stock"
+- inputText: "100"
+
+- tapOn:
+    text: "SKU (Optional)"
+- inputText: "sku-100"
+
+- tapOn:
+    text: "Discount % (Optional)"
+- inputText: "10"
+
+- tapOn:
+    text: "Next"
+
+- tapOn:
+    text: "Description"
+- inputText: "Test Description"
+
+- tapOn:
+    text: "Next"
+
+- tapOn:
+    text: "Add Photo"
+- tapOn:
+    text: "Paste image link"
+- tapOn:
+    text: "https://example.com/image.jpg"
+- inputText: "https://example.com/image.jpg"
+- tapOn:
+    text: "Add"
+
+- tapOn:
+    text: "Next"
+
+- tapOn:
+    id: "${output.addEditProductListing.shipping.expressButton}"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.pickupButton}"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.buyerPaysButton}"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.standardFeeField}"
+- inputText: "5"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.expressFeeField}"
+- inputText: "10"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.pickupFeeField}"
+- inputText: "15"
+
+- tapOn:
+    text: "Next"
+
+- tapOn:
+    text: "Publish Listing"
+
+- assertVisible: "Seller Dashboard"
+- assertVisible: "Sample Product Only"
