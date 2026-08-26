@@ -12,3 +12,5 @@ appId: ${APP_ID}
       EMAIL: ${EMAIL}
       PASSWORD: ${PASSWORD}
       API_URL: ${API_URL}
+- runScript: 
+    file: clients/generateData.js

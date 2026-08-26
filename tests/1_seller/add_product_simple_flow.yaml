@@ -19,7 +19,10 @@ tags:
 # --- Step 1: Basic Info ---
 - tapOn:
     text: "Product Name"
-- inputText: "Sample Product Only"
+- inputText: 
+    text: ${output.PRODUCT_NAME}
+    label: "Enter Product Name"
+        
 
 - tapOn:
     text: "Select a category"
@@ -68,7 +71,7 @@ tags:
     text: "Paste image link"
 - tapOn:
     text: "https://example.com/image.jpg"
-- inputText: "https://example.com/image.jpg"
+- inputText: "https://picsum.photos/400/400"
 - tapOn:
     text: "Add"
 
@@ -106,7 +109,7 @@ tags:
     text: "Publish Listing"
 
 - assertVisible: "Seller Dashboard"
-# - assertVisible: "Sample Product Only"
+- assertVisible: "Electronics\n${output.PRODUCT_NAME}\n$99.99\nStock: 100"
 
 # Teardown - delete via API
 - runScript:
@@ -115,4 +118,4 @@ tags:
       EMAIL: ${EMAIL}
       PASSWORD: ${PASSWORD}
       API_URL: ${API_URL}
-      PRODUCT_NAME: "Sample Product Only"
+      PRODUCT_NAME: ${output.PRODUCT_NAME}
