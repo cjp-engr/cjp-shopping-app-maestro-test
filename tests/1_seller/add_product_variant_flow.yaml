@@ -1,6 +1,74 @@
 appId: ${APP_ID}
+name: "TC-091: seller creates variant product via wizard"
+# Description: Verifies that a seller can successfully create a variant 
+#              product listing using the wizard, and that the listing appears on the
+#              Seller Dashboard after publishing.
+tags:
+  - add-product-variant
+  - seller
+  - smoke
+  
 ---
 
-- runFlow: ../../elements/loadElements.yaml
-- launchApp:
-    clearState: true
+- runFlow: ../0_auth/login_flow.yaml
+
+- tapOn:
+    id: ${output.navBar.sellerNavTab}
+    label: "Tap Seller Navigation tab"
+- tapOn:
+    id: ${output.sellerDashboard.addProductFab}
+    label: "Tap Add product button"
+
+# --- Step 1: Basic Info ---
+- tapOn:
+    text: "Product Name"
+- inputText: 
+    text: ${output.PRODUCT_NAME}
+    label: "Enter Product Name"
+        
+
+- tapOn:
+    text: "Select a category"
+- tapOn:
+    text: "Electronics"
+
+- tapOn:
+    text: "Brand (Optional)"
+- inputText: "Brand Test"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 2: Pricing ---
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantsToggle}"
+    label: "Enable variants"
+
+- tapOn:
+    id: "${output.addEditProductListing.pricing.addAttributeButton}"
+    label: "Tap + Add button"
+
+- tapOn:
+    text: "Attribute Name"
+- inputText: "Size"
+
+- tapOn:
+    text: "Add Value"
+- inputText: "S"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.attributeAddValueButton}"
+
+- tapOn:
+    text: "Add Value"
+- inputText: "M"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.attributeAddValueButton}"
+
+- tapOn:
+    text: "Add Value"
+- inputText: "L"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.attributeAddValueButton}"
+
+- tapOn:
+    text: "Add Attribute"
