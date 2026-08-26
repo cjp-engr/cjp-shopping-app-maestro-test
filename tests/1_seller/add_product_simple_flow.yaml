@@ -1,6 +1,121 @@
 appId: ${APP_ID}
+name: "TC-090: seller creates simple product via wizard"
+tags:
+  - add-product-simple
+  - seller
+  - smoke
+  
 ---
 
-- runFlow: ../../elements/loadElements.yaml
-- launchApp:
-    clearState: true
+- runFlow: ../0_auth/login_flow.yaml
+
+- tapOn:
+    id: ${output.navBar.sellerNavTab}
+    label: "Tap Seller Navigation tab"
+- tapOn:
+    id: ${output.sellerDashboard.addProductFab}
+    label: "Tap Add product button"
+
+# --- Step 1: Basic Info ---
+- tapOn:
+    text: "Product Name"
+- inputText: 
+    text: ${output.PRODUCT_NAME}
+    label: "Enter Product Name"
+        
+
+- tapOn:
+    text: "Select a category"
+- tapOn:
+    text: "Electronics"
+
+- tapOn:
+    text: "Brand (Optional)"
+- inputText: "Brand Test"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 2: Pricing ---
+- tapOn:
+    text: "Price ($)"
+- inputText: "99.99"
+
+- tapOn:
+    text: "Stock"
+- inputText: "100"
+
+- tapOn:
+    text: "SKU (Optional)"
+- inputText: "sku-100"
+
+- tapOn:
+    text: "Discount % (Optional)"
+- inputText: "10"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 3: Description ---
+- tapOn:
+    text: "Description"
+- inputText: "Test Description"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 4: Images ---
+- tapOn:
+    text: "Add Photo"
+- tapOn:
+    text: "Paste image link"
+- tapOn:
+    text: "https://example.com/image.jpg"
+- inputText: "https://picsum.photos/400/400"
+- tapOn:
+    text: "Add"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 5: Shipping ---
+- tapOn:
+    id: "${output.addEditProductListing.shipping.expressButton}"
+    label: "Select Express as buyer's shipping option"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.pickupButton}"
+    label: "Select Pickup as buyer's shipping option"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.buyerPaysButton}"
+    label: "Select Buyer Pays"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.standardFeeField}"
+    label: "Tap Standard Fee field"
+- inputText: "5"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.expressFeeField}"
+    label: "Tap Express Fee field"
+- inputText: "10"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.pickupFeeField}"
+    label: "Tap Pickup Fee field"
+- inputText: "15"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 6: Review ---
+- tapOn:
+    text: "Publish Listing"
+
+- assertVisible: "Seller Dashboard"
+- assertVisible: "Electronics\n${output.PRODUCT_NAME}\n$99.99\nStock: 100"
+
+# Teardown - delete via API
+- runScript:
+    file: ../../elements/clients/deleteProduct.js
+    env:
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+      API_URL: ${API_URL}
+      PRODUCT_NAME: ${output.PRODUCT_NAME}

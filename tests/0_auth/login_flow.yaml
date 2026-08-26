@@ -11,5 +11,6 @@ appId: ${APP_ID}
 - tapOn:
     id: ${output.login.loginPasswordField}
 - inputText: ${PASSWORD}
-- tapOn: "login_button"
+- tapOn: 
+    id: ${output.login.loginButton}
 - assertVisible: "New Arrivals"
