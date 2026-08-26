@@ -1,5 +1,8 @@
 appId: ${APP_ID}
-name: "TC-090: seller creates simple product via wizard"
+name: "TC-090: Seller Creates Simple Product via Wizard"
+# Description: Verifies that a seller can successfully create a simple (non-variant)
+#              product listing using the wizard, and that the listing appears on the
+#              Seller Dashboard after publishing.
 tags:
   - add-product-simple
   - seller
