@@ -2,12 +2,12 @@
 appId: ${APP_ID}
 ---
 
-- runScript: login.js
-- runScript: navBar.js
-- runScript: sellerDashboard.js
-- runScript: addEditProductListing.js
+- runScript: selectors/login.js
+- runScript: selectors/navBar.js
+- runScript: selectors/sellerDashboard.js
+- runScript: selectors/addEditProductListing.js
 - runScript:
-    file: apiClients.js
+    file: clients/apiClients.js
     env:
       EMAIL: ${EMAIL}
       PASSWORD: ${PASSWORD}
