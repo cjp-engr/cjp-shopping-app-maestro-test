@@ -5,7 +5,7 @@ appId: ${APP_ID}
 - runScript: selectors/login.js
 - runScript: selectors/navBar.js
 - runScript: selectors/sellerDashboard.js
-- runScript: selectors/addEditProductListing.js
+- runScript: selectors/addEditProduct.js
 - runScript:
     file: clients/apiClients.js
     env:
