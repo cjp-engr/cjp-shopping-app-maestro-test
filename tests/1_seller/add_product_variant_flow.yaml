@@ -22,6 +22,7 @@ tags:
 # --- Step 1: Basic Info ---
 - tapOn:
     text: "Product Name"
+    label: "Tap Product Name text field"
 - inputText: 
     text: ${output.PRODUCT_NAME}
     label: "Enter Product Name"
@@ -29,11 +30,14 @@ tags:
 
 - tapOn:
     text: "Select a category"
+    label: "Tap Category select field"
 - tapOn:
     text: "Electronics"
+    label: "Select category option"
 
 - tapOn:
     text: "Brand (Optional)"
+    label: "Tap Brand (Optional) text field"
 - inputText: "Brand Test"
 
 - tapOn:
@@ -42,33 +46,208 @@ tags:
 # --- Step 2: Pricing ---
 - tapOn:
     id: "${output.addEditProductListing.pricing.variantsToggle}"
-    label: "Enable variants"
+    label: "Toggle and enable variants"
 
 - tapOn:
     id: "${output.addEditProductListing.pricing.addAttributeButton}"
     label: "Tap + Add button"
 
+# --- Step 2: Pricing - Variant name ---
 - tapOn:
     text: "Attribute Name"
+    label: "Tap Attribute Name text field"
 - inputText: "Size"
 
+# --- Step 2: Pricing - Variant value - S ---
 - tapOn:
     text: "Add Value"
+    label: "Tap Add Value text field"
 - inputText: "S"
 - tapOn:
     id: "${output.addEditProductListing.pricing.attributeAddValueButton}"
+    label: "Tap Add Value button"
 
+# --- Step 2: Pricing - Variant value - M ---
 - tapOn:
     text: "Add Value"
+    label: "Tap Add Value text field"
 - inputText: "M"
 - tapOn:
     id: "${output.addEditProductListing.pricing.attributeAddValueButton}"
+    label: "Tap Add Value button"
 
+# --- Step 2: Pricing - Variant value - L ---
 - tapOn:
     text: "Add Value"
+    label: "Tap Add Value text field"
 - inputText: "L"
 - tapOn:
     id: "${output.addEditProductListing.pricing.attributeAddValueButton}"
+    label: "Tap Add Value button"
 
 - tapOn:
     text: "Add Attribute"
+    label: "Tap Add Attribute button"
+
+# --- Step 2: Pricing - Variant details for Size S ---
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProductListing.pricing.variantPriceField}S"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantPriceField}S"
+    label: "Tap Price text field for Size S"
+- inputText: "25"
+
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProductListing.pricing.variantStockField}S"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantStockField}S"
+    label: "Tap Stock text field for Size S"
+- inputText: "100"
+
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProductListing.pricing.variantDiscountField}S"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantDiscountField}S"
+    label: "Tap Discount text field for Size S"
+- inputText: "10"
+
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProductListing.pricing.variantSkuField}S"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantSkuField}S"
+    label: "Tap SKU text field for Size S"
+- inputText: "SKU-001-S"
+
+# --- Step 2: Pricing - Variant details for Size M ---
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProductListing.pricing.variantPriceField}M"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantPriceField}M"
+    label: "Tap Price text field for Size M"
+- inputText: "30"
+
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProductListing.pricing.variantStockField}M"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantStockField}M"
+    label: "Tap Stock text field for Size M"
+- inputText: "150"
+
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProductListing.pricing.variantDiscountField}M"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantDiscountField}M"
+    label: "Tap Discount text field for Size M"
+- inputText: "12"
+
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProductListing.pricing.variantSkuField}M"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantSkuField}M"
+    label: "Tap SKU text field for Size M"
+- inputText: "SKU-001-M"
+
+# --- Step 2: Pricing - Variant details for Size L ---
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProductListing.pricing.variantPriceField}L"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantPriceField}L"
+    label: "Tap Price text field for Size L"
+- inputText: "35"
+
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProductListing.pricing.variantStockField}L"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantStockField}L"
+    label: "Tap Stock text field for Size L"
+- inputText: "50"
+
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProductListing.pricing.variantDiscountField}L"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantDiscountField}L"
+    label: "Tap Discount text field for Size L"
+- inputText: "15"
+
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProductListing.pricing.variantSkuField}L"
+- tapOn:
+    id: "${output.addEditProductListing.pricing.variantSkuField}L"
+    label: "Tap SKU text field for Size L"
+- inputText: "SKU-001-L"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 3: Description ---
+- tapOn:
+    text: "Description"
+- inputText: "Test Description"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 4: Images ---
+- tapOn:
+    text: "Add Photo"
+- tapOn:
+    text: "Take a Photo"
+- tapOn: "Shutter"
+- tapOn: "Done"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 5: Shipping ---
+- tapOn:
+    id: "${output.addEditProductListing.shipping.expressButton}"
+    label: "Select Express as buyer's shipping option"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.pickupButton}"
+    label: "Select Pickup as buyer's shipping option"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.buyerPaysButton}"
+    label: "Select Buyer Pays"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.standardFeeField}"
+    label: "Tap Standard Fee text field"
+- inputText: "5"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.expressFeeField}"
+    label: "Tap Express Fee text field"
+- inputText: "10"
+- tapOn:
+    id: "${output.addEditProductListing.shipping.pickupFeeField}"
+    label: "Tap Pickup Fee text field"
+- inputText: "15"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 6: Review ---
+- tapOn:
+    text: "Publish Listing"
+
+- assertVisible: "Seller Dashboard"
+- assertVisible: "Electronics\n${output.PRODUCT_NAME}\n$10.00\nStock: 100"
+
+# Teardown - delete via API
+- runScript:
+    file: ../../elements/clients/deleteProduct.js
+    env:
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+      API_URL: ${API_URL}
+      PRODUCT_NAME: ${output.PRODUCT_NAME}
