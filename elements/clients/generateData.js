@@ -1,3 +1,3 @@
 // generateData.js
-output.PRODUCT_NAME = 'Product ' + Math.random().toString(36).substring(2, 8);
+output.PRODUCT_NAME = 'TestProduct Name ' + Date.now();
 console.log('Generated product name:', output.PRODUCT_NAME);

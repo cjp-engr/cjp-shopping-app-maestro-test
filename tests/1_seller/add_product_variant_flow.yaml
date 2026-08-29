@@ -241,7 +241,13 @@ tags:
     text: "Publish Listing"
 
 - assertVisible: "Seller Dashboard"
-- assertVisible: "Electronics\n${output.PRODUCT_NAME}\n$10.00\nStock: 100"
+- assertVisible: "Electronics"
+- assertVisible:
+    id: "product_tile_${output.PRODUCT_NAME}"
+- assertVisible: "$25.00"
+- assertVisible:
+    id: "product_tile_Stock: 300"
+
 
 # Teardown - delete via API
 - runScript:
