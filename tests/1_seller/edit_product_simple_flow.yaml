@@ -1,6 +1,93 @@
 appId: ${APP_ID}
+name: "TC-616: Seller Edits Simple Product via Wizard"
+# Description: Verifies that a seller can open a simple product in edit mode,
+#              change the name and price, and that the dashboard tile reflects
+#              the updated values after publishing.
+tags:
+  - edit-product-simple
+  - seller
+  - smoke
+
 ---
 
-- runFlow: ../../elements/loadElements.yaml
-- launchApp:
-    clearState: true
+- runFlow: ../0_auth/login_flow.yaml
+
+# Generate the updated product name to type in the wizard
+- runScript: ../../elements/clients/generateData.js
+
+# Precondition: load createSimpleProduct function, then call it via evalScript
+- runScript:
+    file: ../../elements/clients/createProduct.js
+    env:
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+      API_URL: ${API_URL}
+
+- evalScript: |
+    var originalName = 'EditTest ' + Date.now();
+    output.ORIGINAL_PRODUCT_NAME = originalName;
+    output.PRODUCT_ID = output.createSimpleProduct(originalName);
+
+# Navigate to Seller Dashboard
+- tapOn:
+    id: ${output.navBar.sellerNavTab}
+    label: "Tap Seller Navigation tab"
+
+- assertVisible: ${output.ORIGINAL_PRODUCT_NAME}
+
+# Tap edit icon on the product tile
+# NOTE: Flutter key 'edit_product_button_<id>' is missing — add key to edit icon widget first
+- tapOn:
+    id: "${output.sellerDashboard.editProductButton}${output.PRODUCT_ID}"
+    label: "Tap Edit icon on product tile"
+
+# --- Step 1: Basic Info (pre-filled — change name only) ---
+- tapOn:
+    text: "Product Name"
+    label: "Tap Product Name text field"
+- eraseText: 50
+- inputText:
+    text: ${output.PRODUCT_NAME}
+    label: "Enter updated Product Name"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 2: Pricing (pre-filled — change price only) ---
+- tapOn:
+    text: "Price ($)"
+    label: "Tap Price text field"
+- eraseText: 50
+- inputText: "149.99"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 3: Description (pre-filled — advance only) ---
+- tapOn:
+    text: "Next"
+
+# --- Step 4: Images (pre-filled — advance only) ---
+- tapOn:
+    text: "Next"
+
+# --- Step 5: Shipping (pre-filled — advance only) ---
+- tapOn:
+    text: "Next"
+
+# --- Step 6: Review ---
+- tapOn:
+    text: "Publish Listing"
+
+- assertVisible: "Seller Dashboard"
+- assertVisible:
+    id: "product_tile_${output.PRODUCT_NAME}"
+
+# Teardown - delete updated product via API (use new name after rename)
+- runScript:
+    file: ../../elements/clients/deleteProduct.js
+    env:
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+      API_URL: ${API_URL}
+      PRODUCT_NAME: ${output.PRODUCT_NAME}
