@@ -124,7 +124,7 @@ tags:
 
 - assertVisible: "Seller Dashboard"
 - assertVisible:
-    id: "product_tile_${output.PRODUCT_NAME}"
+    id: "product_tile_name_${output.PRODUCT_NAME}"
 
 # Teardown - delete updated product via API (use new name after rename)
 - runScript:
