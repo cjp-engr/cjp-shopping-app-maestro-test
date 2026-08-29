@@ -8,10 +8,10 @@ output.addEditProduct = {
     },
     pricing: {
         simple: {
-            priceField: '',
-            stockField: '',
-            skuField: '',
-            discountField: '',
+            priceField: 'wizard_price_field',
+            stockField: 'wizard_stock_field',
+            skuField: 'wizard_sku_field',
+            discountField: 'wizard_discount_field',
         },
         variant: {
             toggle: 'wizard_variants_toggle',

@@ -15,37 +15,38 @@ tags:
 # Generate the updated product name to type in the wizard
 - runScript: ../../elements/clients/generateData.js
 
-# Precondition: load createSimpleProduct function, then call it via evalScript
+# Precondition: create a simple product via API and get its ID
 - runScript:
     file: ../../elements/clients/createProduct.js
     env:
       EMAIL: ${EMAIL}
       PASSWORD: ${PASSWORD}
       API_URL: ${API_URL}
-
-- evalScript: |
-    var originalName = 'EditTest ' + Date.now();
-    output.ORIGINAL_PRODUCT_NAME = originalName;
-    output.PRODUCT_ID = output.createSimpleProduct(originalName);
+      SETUP_SIMPLE: "true"
 
 # Navigate to Seller Dashboard
 - tapOn:
     id: ${output.navBar.sellerNavTab}
     label: "Tap Seller Navigation tab"
 
-- assertVisible: ${output.ORIGINAL_PRODUCT_NAME}
+- assertVisible:
+    id: "product_tile_${output.ORIGINAL_PRODUCT_NAME}"
 
 # Tap edit icon on the product tile
-# NOTE: Flutter key 'edit_product_button_<id>' is missing — add key to edit icon widget first
 - tapOn:
-    id: "${output.sellerDashboard.editProductButton}${output.PRODUCT_ID}"
+    id: "${output.sellerDashboard.editProductButton}${output.ORIGINAL_PRODUCT_NAME}"
     label: "Tap Edit icon on product tile"
 
 # --- Step 1: Basic Info (pre-filled — change name only) ---
-- tapOn:
-    text: "Product Name"
-    label: "Tap Product Name text field"
-- eraseText: 50
+# 1. Select the entire text block
+- longPressOn: 
+    id: "${output.addEditProduct.basicInfo.productNameField}"
+    label: "Long Press Product Name"
+- tapOn: 
+    text: "Select All"
+    label: "Select All Product Name"
+# 2. Perform a single backspace to clear the selection
+- eraseText: 1
 - inputText:
     text: ${output.PRODUCT_NAME}
     label: "Enter updated Product Name"
@@ -54,11 +55,22 @@ tags:
     text: "Next"
 
 # --- Step 2: Pricing (pre-filled — change price only) ---
-- tapOn:
-    text: "Price ($)"
+- longPressOn:
+    id: "${output.addEditProduct.pricing.simple.priceField}"
     label: "Tap Price text field"
-- eraseText: 50
+- tapOn: 
+    text: "Select All"
+    label: "Select All Price text"
+- eraseText: 1
 - inputText: "149.99"
+- longPressOn:
+    id: "${output.addEditProduct.pricing.simple.stockField}"
+    label: "Tap Stock text field"
+- tapOn: 
+    text: "Select All"
+    label: "Select All Stock text"
+- eraseText: 1
+- inputText: "200"
 
 - tapOn:
     text: "Next"
@@ -69,15 +81,46 @@ tags:
 
 # --- Step 4: Images (pre-filled — advance only) ---
 - tapOn:
+    text: "Add Photo"
+- tapOn:
+    text: "Paste image link"
+- tapOn:
+    text: "https://example.com/image.jpg"
+- inputText: "https://picsum.photos/400/400"
+- tapOn:
+    text: "Add"
+- tapOn:
     text: "Next"
 
 # --- Step 5: Shipping (pre-filled — advance only) ---
+- tapOn:
+    id: "${output.addEditProduct.shipping.expressButton}"
+    label: "Select Express as buyer's shipping option"
+- tapOn:
+    id: "${output.addEditProduct.shipping.pickupButton}"
+    label: "Select Pickup as buyer's shipping option"
+- tapOn:
+    id: "${output.addEditProduct.shipping.buyerPaysButton}"
+    label: "Select Buyer Pays"
+- tapOn:
+    id: "${output.addEditProduct.shipping.standardFeeField}"
+    label: "Tap Standard Fee field"
+- inputText: "5"
+- tapOn:
+    id: "${output.addEditProduct.shipping.expressFeeField}"
+    label: "Tap Express Fee field"
+- inputText: "10"
+- tapOn:
+    id: "${output.addEditProduct.shipping.pickupFeeField}"
+    label: "Tap Pickup Fee field"
+- inputText: "15"
+
 - tapOn:
     text: "Next"
 
 # --- Step 6: Review ---
 - tapOn:
-    text: "Publish Listing"
+    text: "Save Changes"
 
 - assertVisible: "Seller Dashboard"
 - assertVisible:
