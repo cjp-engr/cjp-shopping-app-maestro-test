@@ -45,11 +45,11 @@ tags:
 
 # --- Step 2: Pricing ---
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantsToggle}"
+    id: "${output.addEditProduct.pricing.variant.toggle}"
     label: "Toggle and enable variants"
 
 - tapOn:
-    id: "${output.addEditProductListing.pricing.addAttributeButton}"
+    id: "${output.addEditProduct.pricing.variant.addAttrButton}"
     label: "Tap + Add button"
 
 # --- Step 2: Pricing - Variant name ---
@@ -64,7 +64,7 @@ tags:
     label: "Tap Add Value text field"
 - inputText: "S"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.attributeAddValueButton}"
+    id: "${output.addEditProduct.pricing.variant.attrAddValueButton}"
     label: "Tap Add Value button"
 
 # --- Step 2: Pricing - Variant value - M ---
@@ -73,7 +73,7 @@ tags:
     label: "Tap Add Value text field"
 - inputText: "M"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.attributeAddValueButton}"
+    id: "${output.addEditProduct.pricing.variant.attrAddValueButton}"
     label: "Tap Add Value button"
 
 # --- Step 2: Pricing - Variant value - L ---
@@ -82,7 +82,7 @@ tags:
     label: "Tap Add Value text field"
 - inputText: "L"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.attributeAddValueButton}"
+    id: "${output.addEditProduct.pricing.variant.attrAddValueButton}"
     label: "Tap Add Value button"
 
 - tapOn:
@@ -92,99 +92,99 @@ tags:
 # --- Step 2: Pricing - Variant details for Size S ---
 - scrollUntilVisible:
     element:
-      id: "${output.addEditProductListing.pricing.variantPriceField}S"
+      id: "${output.addEditProduct.pricing.variant.priceField}S"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantPriceField}S"
+    id: "${output.addEditProduct.pricing.variant.priceField}S"
     label: "Tap Price text field for Size S"
 - inputText: "25"
 
 - scrollUntilVisible:
     element:
-      id: "${output.addEditProductListing.pricing.variantStockField}S"
+      id: "${output.addEditProduct.pricing.variant.stockField}S"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantStockField}S"
+    id: "${output.addEditProduct.pricing.variant.stockField}S"
     label: "Tap Stock text field for Size S"
 - inputText: "100"
 
 - scrollUntilVisible:
     element:
-      id: "${output.addEditProductListing.pricing.variantDiscountField}S"
+      id: "${output.addEditProduct.pricing.variant.discountField}S"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantDiscountField}S"
+    id: "${output.addEditProduct.pricing.variant.discountField}S"
     label: "Tap Discount text field for Size S"
 - inputText: "10"
 
 - scrollUntilVisible:
     element:
-      id: "${output.addEditProductListing.pricing.variantSkuField}S"
+      id: "${output.addEditProduct.pricing.variant.skuField}S"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantSkuField}S"
+    id: "${output.addEditProduct.pricing.variant.skuField}S"
     label: "Tap SKU text field for Size S"
 - inputText: "SKU-001-S"
 
 # --- Step 2: Pricing - Variant details for Size M ---
 - scrollUntilVisible:
     element:
-      id: "${output.addEditProductListing.pricing.variantPriceField}M"
+      id: "${output.addEditProduct.pricing.variant.priceField}M"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantPriceField}M"
+    id: "${output.addEditProduct.pricing.variant.priceField}M"
     label: "Tap Price text field for Size M"
 - inputText: "30"
 
 - scrollUntilVisible:
     element:
-      id: "${output.addEditProductListing.pricing.variantStockField}M"
+      id: "${output.addEditProduct.pricing.variant.stockField}M"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantStockField}M"
+    id: "${output.addEditProduct.pricing.variant.stockField}M"
     label: "Tap Stock text field for Size M"
 - inputText: "150"
 
 - scrollUntilVisible:
     element:
-      id: "${output.addEditProductListing.pricing.variantDiscountField}M"
+      id: "${output.addEditProduct.pricing.variant.discountField}M"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantDiscountField}M"
+    id: "${output.addEditProduct.pricing.variant.discountField}M"
     label: "Tap Discount text field for Size M"
 - inputText: "12"
 
 - scrollUntilVisible:
     element:
-      id: "${output.addEditProductListing.pricing.variantSkuField}M"
+      id: "${output.addEditProduct.pricing.variant.skuField}M"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantSkuField}M"
+    id: "${output.addEditProduct.pricing.variant.skuField}M"
     label: "Tap SKU text field for Size M"
 - inputText: "SKU-001-M"
 
 # --- Step 2: Pricing - Variant details for Size L ---
 - scrollUntilVisible:
     element:
-      id: "${output.addEditProductListing.pricing.variantPriceField}L"
+      id: "${output.addEditProduct.pricing.variant.priceField}L"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantPriceField}L"
+    id: "${output.addEditProduct.pricing.variant.priceField}L"
     label: "Tap Price text field for Size L"
 - inputText: "35"
 
 - scrollUntilVisible:
     element:
-      id: "${output.addEditProductListing.pricing.variantStockField}L"
+      id: "${output.addEditProduct.pricing.variant.stockField}L"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantStockField}L"
+    id: "${output.addEditProduct.pricing.variant.stockField}L"
     label: "Tap Stock text field for Size L"
 - inputText: "50"
 
 - scrollUntilVisible:
     element:
-      id: "${output.addEditProductListing.pricing.variantDiscountField}L"
+      id: "${output.addEditProduct.pricing.variant.discountField}L"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantDiscountField}L"
+    id: "${output.addEditProduct.pricing.variant.discountField}L"
     label: "Tap Discount text field for Size L"
 - inputText: "15"
 
 - scrollUntilVisible:
     element:
-      id: "${output.addEditProductListing.pricing.variantSkuField}L"
+      id: "${output.addEditProduct.pricing.variant.skuField}L"
 - tapOn:
-    id: "${output.addEditProductListing.pricing.variantSkuField}L"
+    id: "${output.addEditProduct.pricing.variant.skuField}L"
     label: "Tap SKU text field for Size L"
 - inputText: "SKU-001-L"
 
@@ -212,24 +212,24 @@ tags:
 
 # --- Step 5: Shipping ---
 - tapOn:
-    id: "${output.addEditProductListing.shipping.expressButton}"
+    id: "${output.addEditProduct.shipping.expressButton}"
     label: "Select Express as buyer's shipping option"
 - tapOn:
-    id: "${output.addEditProductListing.shipping.pickupButton}"
+    id: "${output.addEditProduct.shipping.pickupButton}"
     label: "Select Pickup as buyer's shipping option"
 - tapOn:
-    id: "${output.addEditProductListing.shipping.buyerPaysButton}"
+    id: "${output.addEditProduct.shipping.buyerPaysButton}"
     label: "Select Buyer Pays"
 - tapOn:
-    id: "${output.addEditProductListing.shipping.standardFeeField}"
+    id: "${output.addEditProduct.shipping.standardFeeField}"
     label: "Tap Standard Fee text field"
 - inputText: "5"
 - tapOn:
-    id: "${output.addEditProductListing.shipping.expressFeeField}"
+    id: "${output.addEditProduct.shipping.expressFeeField}"
     label: "Tap Express Fee text field"
 - inputText: "10"
 - tapOn:
-    id: "${output.addEditProductListing.shipping.pickupFeeField}"
+    id: "${output.addEditProduct.shipping.pickupFeeField}"
     label: "Tap Pickup Fee text field"
 - inputText: "15"
 
