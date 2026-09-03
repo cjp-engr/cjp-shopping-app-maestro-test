@@ -1,6 +1,47 @@
 appId: ${APP_ID}
+name: "TC-617: Seller Deletes Simple Product from Dashboard"
+# Description: Verifies that a seller can delete a simple product from the dashboard,
+#              that a confirmation dialog appears before deletion, and that the
+#              product tile is no longer visible after confirming.
+tags:
+  - delete-product-simple
+  - seller
+  - smoke
+
 ---
 
-- runFlow: ../../elements/loadElements.yaml
-- launchApp:
-    clearState: true
+- runFlow: ../0_auth/login_flow.yaml
+
+# Precondition: create a simple product via API and get its ID
+- runScript:
+    file: ../../elements/clients/createProduct.js
+    env:
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+      API_URL: ${API_URL}
+      SETUP_SIMPLE: "true"
+
+# Navigate to Seller Dashboard
+- tapOn:
+    id: ${output.navBar.sellerNavTab}
+    label: "Tap Seller Navigation tab"
+
+- assertVisible:
+    id: "product_tile_name_${output.ORIGINAL_PRODUCT_NAME}"
+
+# Tap delete icon on the product tile
+- tapOn:
+    id: "${output.sellerDashboard.deleteProductButton}${output.ORIGINAL_PRODUCT_NAME}"
+    label: "Tap Delete icon on product tile"
+
+# Confirm deletion in the dialog
+- assertVisible: 
+    id: "${output.sellerDashboard.deleteDialog.dialogTitle}"
+
+- tapOn:
+    text: "Yes, Delete"
+    label: "Confirm deletion"
+
+# Assert product tile is gone from the dashboard
+- assertNotVisible:
+    id: "product_tile_name_${output.ORIGINAL_PRODUCT_NAME}"
