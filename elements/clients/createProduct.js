@@ -65,3 +65,15 @@ function createVariantProduct(name) {
 
 output.createSimpleProduct = createSimpleProduct;
 output.createVariantProduct = createVariantProduct;
+
+if (typeof SETUP_SIMPLE !== 'undefined' && SETUP_SIMPLE === 'true') {
+    var productName = 'EditTest ' + Date.now();
+    output.ORIGINAL_PRODUCT_NAME = productName;
+    output.PRODUCT_ID = createSimpleProduct(productName);
+}
+
+if (typeof SETUP_VARIANT !== 'undefined' && SETUP_VARIANT === 'true') {
+    var productName = 'EditTest ' + Date.now();
+    output.ORIGINAL_PRODUCT_NAME = productName;
+    output.PRODUCT_ID = createVariantProduct(productName);
+}
