@@ -30,7 +30,7 @@ tags:
     label: "Tap Seller Navigation tab"
 
 - assertVisible:
-    id: "product_tile_${output.ORIGINAL_PRODUCT_NAME}"
+    id: "product_tile_name_${output.ORIGINAL_PRODUCT_NAME}"
 
 # Tap edit icon on the product tile
 - tapOn:
