@@ -1,8 +1,8 @@
 appId: ${APP_ID}
 name: "TC-619: Seller Edits Variant Product via Wizard"
 # Description: Verifies that a seller can open a variant product in edit mode,
-#              change the price on one variant (Size M), and that the update
-#              persists after publishing.
+#              change the product name and the price on one variant (Size M),
+#              and that both updates persist after publishing.
 tags:
   - edit-product-variant
   - seller
