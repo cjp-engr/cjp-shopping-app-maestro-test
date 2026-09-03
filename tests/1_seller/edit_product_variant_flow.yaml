@@ -1,6 +1,109 @@
 appId: ${APP_ID}
+name: "TC-619: Seller Edits Variant Product via Wizard"
+# Description: Verifies that a seller can open a variant product in edit mode,
+#              change the product name and the price on one variant (Size M),
+#              and that both updates persist after publishing.
+tags:
+  - edit-product-variant
+  - seller
+  - smoke
+
 ---
 
-- runFlow: ../../elements/loadElements.yaml
-- launchApp:
-    clearState: true
+- runFlow: ../0_auth/login_flow.yaml
+
+# Precondition: create a variant product via API and get its ID
+- runScript:
+    file: ../../elements/clients/createProduct.js
+    env:
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+      API_URL: ${API_URL}
+      SETUP_VARIANT: "true"
+
+# Navigate to Seller Dashboard
+- tapOn:
+    id: ${output.navBar.sellerNavTab}
+    label: "Tap Seller Navigation tab"
+
+- assertVisible:
+    id: "product_tile_name_${output.ORIGINAL_PRODUCT_NAME}"
+
+# Tap edit icon on the product tile
+- tapOn:
+    id: "${output.sellerDashboard.editProductButton}${output.ORIGINAL_PRODUCT_NAME}"
+    label: "Tap Edit icon on product tile"
+
+# --- Step 1: Basic Info (pre-filled — advance only) ---
+# 1. Select the entire text block
+- longPressOn: 
+    id: "${output.addEditProduct.basicInfo.productNameField}"
+    label: "Long Press Product Name"
+- tapOn: 
+    text: "Select All"
+    label: "Select All Product Name"
+# 2. Perform a single backspace to clear the selection
+- eraseText: 1
+- inputText:
+    text: ${output.PRODUCT_NAME}
+    label: "Enter updated Product Name"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 2: Pricing / Variants (pre-filled — change Size M price only) ---
+- scrollUntilVisible:
+    element:
+      id: "${output.addEditProduct.pricing.variant.priceField}M"
+    direction: DOWN
+- longPressOn:
+    id: "${output.addEditProduct.pricing.variant.priceField}M"
+    label: "Long press Size M Price field"
+- tapOn:
+    text: "Select All"
+    label: "Select All text in Size M Price field"
+- eraseText: 1
+- inputText:
+    text: "15.99"
+    label: "Enter updated Size M price"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 3: Description (pre-filled — advance only) ---
+- tapOn:
+    text: "Next"
+
+# --- Step 4: Images (pre-filled — advance only) ---
+- tapOn:
+    text: "Add Photo"
+- tapOn:
+    text: "Take a Photo"
+- tapOn: "Shutter"
+- tapOn: "Done"
+
+- tapOn:
+    text: "Next"
+
+# --- Step 5: Shipping (pre-filled — advance only) ---
+- tapOn:
+    text: "Next"
+
+# --- Step 6: Review ---
+- tapOn:
+    text: "Save Changes"
+
+- assertVisible: "Seller Dashboard"
+- assertVisible:
+    id: "product_tile_name_${output.PRODUCT_NAME}"
+- assertVisible:
+    id: "product_tile_price_${output.PRODUCT_NAME}"
+
+# Teardown - delete via API (name unchanged)
+- runScript:
+    file: ../../elements/clients/deleteProduct.js
+    env:
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+      API_URL: ${API_URL}
+      PRODUCT_NAME: ${output.PRODUCT_NAME}

@@ -4,7 +4,8 @@ output.sellerDashboard = {
     editProductButton: 'edit_product_button_',
 
     list: {
-        category: 'product_tile_category_',
+        // prefix: append productName → e.g. product_tile_xxx_<productName>
+        category: 'product_tile_category_', 
         productName: 'product_tile_name_',
         price: 'product_tile_price_',
         stock: 'product_tile_stock_'
