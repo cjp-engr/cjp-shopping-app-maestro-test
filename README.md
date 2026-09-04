@@ -1,6 +1,12 @@
-# TokoMart Mobile E2E Tests
+<div align="center">
+
+# TokoMart Mobile E2E Tests (Maestro)
 
 End-to-end UI test automation for the TokoMart mobile app using [Maestro](https://maestro.mobile.dev/) — declarative YAML flows that run on Android and iOS without any test harness compiled into the app.
+
+![TokoMart Maestro](docs/img/tokomart_maestro_1.png)
+
+</div>
 
 ---
 
