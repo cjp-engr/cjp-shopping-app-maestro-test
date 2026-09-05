@@ -29,11 +29,14 @@ tags:
 
 - tapOn:
     text: "Select a category"
+    label: "Tap Category select field"
 - tapOn:
     text: "Electronics"
+    label: "Select category option"
 
 - tapOn:
     text: "Brand (Optional)"
+    label: "Tap Brand (Optional) text field"
 - inputText: "Brand Test"
 
 - tapOn:
@@ -42,18 +45,22 @@ tags:
 # --- Step 2: Pricing ---
 - tapOn:
     text: "Price ($)"
+    label: "Tap Price ($) text field"
 - inputText: "99.99"
 
 - tapOn:
     text: "Stock"
+    label: "Tap Stock text field"
 - inputText: "100"
 
 - tapOn:
     text: "SKU (Optional)"
+    label: "Tap SKU (Optional) text field"
 - inputText: "sku-100"
 
 - tapOn:
     text: "Discount % (Optional)"
+    label: "Tap Discount % (Optional) text field"
 - inputText: "10"
 
 - tapOn:
@@ -62,6 +69,7 @@ tags:
 # --- Step 3: Description ---
 - tapOn:
     text: "Description"
+    label: "Tap Description text field"
 - inputText: "Test Description"
 
 - tapOn:
@@ -83,25 +91,25 @@ tags:
 
 # --- Step 5: Shipping ---
 - tapOn:
-    id: "${output.addEditProductListing.shipping.expressButton}"
+    id: "${output.addEditProduct.shipping.expressButton}"
     label: "Select Express as buyer's shipping option"
 - tapOn:
-    id: "${output.addEditProductListing.shipping.pickupButton}"
+    id: "${output.addEditProduct.shipping.pickupButton}"
     label: "Select Pickup as buyer's shipping option"
 - tapOn:
-    id: "${output.addEditProductListing.shipping.buyerPaysButton}"
+    id: "${output.addEditProduct.shipping.buyerPaysButton}"
     label: "Select Buyer Pays"
 - tapOn:
-    id: "${output.addEditProductListing.shipping.standardFeeField}"
-    label: "Tap Standard Fee field"
+    id: "${output.addEditProduct.shipping.standardFeeField}"
+    label: "Tap Standard Fee text field"
 - inputText: "5"
 - tapOn:
-    id: "${output.addEditProductListing.shipping.expressFeeField}"
-    label: "Tap Express Fee field"
+    id: "${output.addEditProduct.shipping.expressFeeField}"
+    label: "Tap Express Fee text field"
 - inputText: "10"
 - tapOn:
-    id: "${output.addEditProductListing.shipping.pickupFeeField}"
-    label: "Tap Pickup Fee field"
+    id: "${output.addEditProduct.shipping.pickupFeeField}"
+    label: "Tap Pickup Fee text field"
 - inputText: "15"
 
 - tapOn:
@@ -112,7 +120,28 @@ tags:
     text: "Publish Listing"
 
 - assertVisible: "Seller Dashboard"
-- assertVisible: "Electronics\n${output.PRODUCT_NAME}\n$99.99\nStock: 100"
+
+# Look up the product ID by name after UI creation
+- runScript:
+    file: ../../elements/clients/findProduct.js
+    env:
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+      API_URL: ${API_URL}
+      PRODUCT_NAME: ${output.PRODUCT_NAME}
+      
+- assertVisible:
+    id: "${output.sellerDashboard.list.category}${output.PRODUCT_ID}"
+    text: "Electronics"
+- assertVisible:
+    id: "${output.sellerDashboard.list.productName}${output.PRODUCT_ID}"
+    text: ${output.PRODUCT_NAME}
+- assertVisible:
+    id: "${output.sellerDashboard.list.price}${output.PRODUCT_ID}"
+    text: "$99.99"
+- assertVisible:
+    id: "${output.sellerDashboard.list.stock}${output.PRODUCT_ID}"
+    text: "Stock: 100"
 
 # Teardown - delete via API
 - runScript:

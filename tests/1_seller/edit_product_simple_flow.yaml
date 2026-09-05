@@ -30,11 +30,11 @@ tags:
     label: "Tap Seller Navigation tab"
 
 - assertVisible:
-    id: "product_tile_name_${output.ORIGINAL_PRODUCT_NAME}"
+    id: "product_tile_name_${output.PRODUCT_ID}"
 
 # Tap edit icon on the product tile
 - tapOn:
-    id: "${output.sellerDashboard.editProductButton}${output.ORIGINAL_PRODUCT_NAME}"
+    id: "${output.sellerDashboard.editProductButton}${output.PRODUCT_ID}"
     label: "Tap Edit icon on product tile"
 
 # --- Step 1: Basic Info (pre-filled — change name only) ---
@@ -123,8 +123,16 @@ tags:
     text: "Save Changes"
 
 - assertVisible: "Seller Dashboard"
+
 - assertVisible:
-    id: "product_tile_name_${output.PRODUCT_NAME}"
+    id: "${output.sellerDashboard.list.productName}${output.PRODUCT_ID}"
+    text: ${output.PRODUCT_NAME}
+- assertVisible:
+    id: "${output.sellerDashboard.list.price}${output.PRODUCT_ID}"
+    text: "$149.99"
+- assertVisible:
+    id: "${output.sellerDashboard.list.stock}${output.PRODUCT_ID}"
+    text: "Stock: 200"
 
 # Teardown - delete updated product via API (use new name after rename)
 - runScript:

@@ -27,11 +27,11 @@ tags:
     label: "Tap Seller Navigation tab"
 
 - assertVisible:
-    id: "product_tile_name_${output.ORIGINAL_PRODUCT_NAME}"
+    id: "product_tile_name_${output.PRODUCT_ID}"
 
 # Tap edit icon on the product tile
 - tapOn:
-    id: "${output.sellerDashboard.editProductButton}${output.ORIGINAL_PRODUCT_NAME}"
+    id: "${output.sellerDashboard.editProductButton}${output.PRODUCT_ID}"
     label: "Tap Edit icon on product tile"
 
 # --- Step 1: Basic Info (pre-filled — advance only) ---
@@ -87,6 +87,27 @@ tags:
 
 # --- Step 5: Shipping (pre-filled — advance only) ---
 - tapOn:
+    id: "${output.addEditProduct.shipping.expressButton}"
+    label: "Select Express as buyer's shipping option"
+- tapOn:
+    id: "${output.addEditProduct.shipping.pickupButton}"
+    label: "Select Pickup as buyer's shipping option"
+- tapOn:
+    id: "${output.addEditProduct.shipping.buyerPaysButton}"
+    label: "Select Buyer Pays"
+- tapOn:
+    id: "${output.addEditProduct.shipping.standardFeeField}"
+    label: "Tap Standard Fee field"
+- inputText: "5"
+- tapOn:
+    id: "${output.addEditProduct.shipping.expressFeeField}"
+    label: "Tap Express Fee field"
+- inputText: "10"
+- tapOn:
+    id: "${output.addEditProduct.shipping.pickupFeeField}"
+    label: "Tap Pickup Fee field"
+- inputText: "15"
+- tapOn:
     text: "Next"
 
 # --- Step 6: Review ---
@@ -95,9 +116,14 @@ tags:
 
 - assertVisible: "Seller Dashboard"
 - assertVisible:
-    id: "product_tile_name_${output.PRODUCT_NAME}"
+    id: "${output.sellerDashboard.list.productName}${output.PRODUCT_ID}"
+    text: ${output.PRODUCT_NAME}
 - assertVisible:
-    id: "product_tile_price_${output.PRODUCT_NAME}"
+    id: "${output.sellerDashboard.list.price}${output.PRODUCT_ID}"
+    text: "$15.99"
+- assertVisible:
+    id: "${output.sellerDashboard.list.stock}${output.PRODUCT_ID}"
+    text: "Stock: 15"
 
 # Teardown - delete via API (name unchanged)
 - runScript:
