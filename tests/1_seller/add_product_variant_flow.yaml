@@ -12,6 +12,8 @@ tags:
 
 - runFlow: ../0_auth/login_flow.yaml
 
+- runScript: ../../elements/clients/generateData.js
+
 - tapOn:
     id: ${output.navBar.sellerNavTab}
     label: "Tap Seller Navigation tab"
@@ -194,6 +196,7 @@ tags:
 # --- Step 3: Description ---
 - tapOn:
     text: "Description"
+    label: "Tap Description text field"
 - inputText: "Test Description"
 
 - tapOn:
@@ -241,12 +244,28 @@ tags:
     text: "Publish Listing"
 
 - assertVisible: "Seller Dashboard"
-- assertVisible: "Electronics"
+
+# Look up the product ID by name after UI creation
+- runScript:
+    file: ../../elements/clients/findProduct.js
+    env:
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+      API_URL: ${API_URL}
+      PRODUCT_NAME: ${output.PRODUCT_NAME}
+      
+- assertVisible: 
+    id: "${output.sellerDashboard.list.category}${output.PRODUCT_ID}"
+    text: "Electronics"
 - assertVisible:
-    id: "product_tile_${output.PRODUCT_NAME}"
-- assertVisible: "$25.00"
+    id: "${output.sellerDashboard.list.productName}${output.PRODUCT_ID}"
+    text: ${output.PRODUCT_NAME}
+- assertVisible: 
+    id: "${output.sellerDashboard.list.price}${output.PRODUCT_ID}"
+    text: "$25.00"
 - assertVisible:
-    id: "product_tile_Stock: 300"
+    id: "${output.sellerDashboard.list.stock}${output.PRODUCT_ID}"
+    text: "Stock: 300"
 
 
 # Teardown - delete via API

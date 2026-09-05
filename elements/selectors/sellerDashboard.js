@@ -1,8 +1,8 @@
 output.sellerDashboard = {
     addProductFab: 'add_product_fab',
-    // prefix: append productId → e.g. edit_product_button_<productName>
+    // prefix: append productId → e.g. edit_product_button_<id>
     editProductButton: 'edit_product_button_',
-    // prefix: append productId → e.g. delete_product_button_<productName>
+    // prefix: append productId → e.g. delete_product_button_<id>
     deleteProductButton: 'delete_product_button_',
 
     list: {
@@ -13,6 +13,6 @@ output.sellerDashboard = {
         stock: 'product_tile_stock_'
     },
     deleteDialog: {
-        dialogTitle: 'dialog_title_Delete Product'
+        dialogTitle: 'dialog_title_delete_product'
     }
 }
