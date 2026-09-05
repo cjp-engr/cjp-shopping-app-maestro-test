@@ -27,11 +27,11 @@ tags:
     label: "Tap Seller Navigation tab"
 
 - assertVisible:
-    id: "product_tile_name_${output.ORIGINAL_PRODUCT_NAME}"
+    id: "product_tile_name_${output.PRODUCT_ID}"
 
 # Tap delete icon on the product tile
 - tapOn:
-    id: "${output.sellerDashboard.deleteProductButton}${output.ORIGINAL_PRODUCT_NAME}"
+    id: "${output.sellerDashboard.deleteProductButton}${output.PRODUCT_ID}"
     label: "Tap Delete icon on product tile"
 
 # Confirm deletion in the dialog
@@ -44,4 +44,4 @@ tags:
 
 # Assert product tile is gone from the dashboard
 - assertNotVisible:
-    id: "product_tile_name_${output.ORIGINAL_PRODUCT_NAME}"
+    id: "product_tile_name_${output.PRODUCT_ID}"
