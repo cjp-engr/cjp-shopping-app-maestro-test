@@ -44,12 +44,19 @@ API_URL=http://10.0.2.2:5000
 # Run a single flow
 maestro test tests/1_seller/add_product_simple_flow.yaml
 
-# Run all flows in a directory
+# Run all flows
 maestro test tests/
+
+# Run by role
+maestro test tests/1_seller/
+maestro test tests/2_buyer/
 
 # Run by tag
 maestro test tests/ --include-tags smoke
 maestro test tests/ --exclude-tags wip
+
+# Run with JUnit output for CI
+maestro test tests/ --format junit --output maestro-report.xml
 
 # Interactive selector explorer
 maestro studio
@@ -62,15 +69,15 @@ maestro studio
 ```
 tests/
   0_auth/
-    login_flow.yaml               # Shared login subflow (used by all tests)
+    login_flow.yaml                 # Shared login subflow (used by all tests)
     signup_flow.yaml
   1_seller/
-    add_product_simple_flow.yaml  # TC-090
-    add_product_variant_flow.yaml # TC-091
-    edit_product_simple_flow.yaml # TC-616
-    edit_product_variant_flow.yaml# TC-619
-    delete_product_simple_flow.yaml
-    delete_product_variant_flow.yaml
+    add_product_simple_flow.yaml    # TC-090
+    add_product_variant_flow.yaml   # TC-091
+    edit_product_simple_flow.yaml   # TC-616
+    edit_product_variant_flow.yaml  # TC-619
+    delete_product_simple_flow.yaml # TC-617
+    delete_product_variant_flow.yaml# TC-620
   2_buyer/
     simple_cod_checkout_flow.yaml
     simple_new_credit_checkout_flow.yaml
@@ -88,7 +95,8 @@ elements/
     addEditProduct.js     # output.addEditProduct.* (wizard fields)
   clients/
     apiClients.js         # Performs API login; exposes output.TOKEN
-    createProduct.js      # createSimpleProduct / createVariantProduct functions + SETUP_* flags
+    createProduct.js      # createSimpleProduct / createVariantProduct + SETUP_* flags
+    findProduct.js        # Looks up product by name via API; sets output.PRODUCT_ID
     deleteProduct.js      # Standalone teardown: finds product by name and deletes it
     generateData.js       # Generates a unique product name into output.PRODUCT_NAME
 ```
@@ -116,10 +124,12 @@ This runs `loadElements.yaml`, which loads all selector scripts and performs API
 | `output.sellerDashboard.*` | `selectors/sellerDashboard.js` | `output.sellerDashboard.addProductFab` |
 | `output.addEditProduct.*` | `selectors/addEditProduct.js` | `output.addEditProduct.pricing.simple.priceField` |
 
-Dynamic IDs use a prefix pattern — append the variant or product identifier:
+Dynamic IDs use a prefix pattern — append the product ID or variant identifier:
 ```yaml
-id: "${output.addEditProduct.pricing.variant.priceField}M"   # → wizard_variant_price_field_M
-id: "${output.sellerDashboard.editProductButton}${output.PRODUCT_ID}" # → edit_product_button_<id>
+id: "${output.addEditProduct.pricing.variant.priceField}M"        # → wizard_variant_price_field_M
+id: "${output.sellerDashboard.editProductButton}${output.PRODUCT_ID}"   # → edit_product_button_<id>
+id: "${output.sellerDashboard.deleteProductButton}${output.PRODUCT_ID}" # → delete_product_button_<id>
+id: "${output.sellerDashboard.list.productName}${output.PRODUCT_ID}"    # → product_tile_name_<id>
 ```
 
 ---
@@ -141,6 +151,21 @@ Creates a product via API as a test precondition. Pass a flag via `env` to trigg
 ```
 
 Sets `output.PRODUCT_ID` and `output.ORIGINAL_PRODUCT_NAME` for use in the flow.
+
+### `findProduct.js`
+Looks up a product by name via API after UI creation and sets `output.PRODUCT_ID`. Includes a retry loop to handle the timing delay between publish and API availability:
+
+```yaml
+- runScript:
+    file: ../../elements/clients/findProduct.js
+    env:
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+      API_URL: ${API_URL}
+      PRODUCT_NAME: ${output.PRODUCT_NAME}
+```
+
+Use this in flows where the product is created through the UI wizard (not via API precondition).
 
 ### `deleteProduct.js`
 Standalone teardown script. Pass the product name as an env var:
@@ -166,7 +191,7 @@ Generates a unique product name using a timestamp:
 
 ## Teardown Pattern
 
-Every flow that creates data cleans up via API at the end:
+Flows that create data via the UI wizard clean up using `deleteProduct.js` at the end:
 
 ```yaml
 - runScript:
@@ -178,17 +203,21 @@ Every flow that creates data cleans up via API at the end:
       PRODUCT_NAME: ${output.PRODUCT_NAME}
 ```
 
-If the product name was changed during the test, pass the updated name. If unchanged, pass `output.ORIGINAL_PRODUCT_NAME`.
+- If the product name was **changed** during the test (edit flows), pass the updated `output.PRODUCT_NAME`
+- If the product name was **unchanged**, pass `output.ORIGINAL_PRODUCT_NAME`
+- Delete flows need **no teardown** — the delete action itself removes the product
 
 ---
 
 ## Tags
 
-| Tag | Flows |
-|---|---|
-| `smoke` | Critical happy-path flows |
-| `seller` | All seller flows |
-| `add-product-simple` | TC-090 |
-| `add-product-variant` | TC-091 |
-| `edit-product-simple` | TC-616 |
-| `edit-product-variant` | TC-619 |
+| Tag | TC | Flows |
+|---|---|---|
+| `smoke` | — | Critical happy-path flows |
+| `seller` | — | All seller flows |
+| `add-product-simple` | TC-090 | `add_product_simple_flow.yaml` |
+| `add-product-variant` | TC-091 | `add_product_variant_flow.yaml` |
+| `edit-product-simple` | TC-616 | `edit_product_simple_flow.yaml` |
+| `edit-product-variant` | TC-619 | `edit_product_variant_flow.yaml` |
+| `delete-product-simple` | TC-617 | `delete_product_simple_flow.yaml` |
+| `delete-product-variant` | TC-620 | `delete_product_variant_flow.yaml` |
